@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yzsunlei.xmall.db.mapper.PmsProductCategoryExpandMapper">
+  <resultMap id="BaseResultMap" type="com.yzsunlei.xmall.db.model.PmsProductCategoryExpand">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="parent_id" jdbcType="VARCHAR" property="pid" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="level" jdbcType="INTEGER" property="level" />
+    <result column="icon" jdbcType="VARCHAR" property="icon" />
+  </resultMap>
+
+  <sql id="Base_Column_List">
+    id, icon, level, name, parent_id
+  </sql>
+
+  <select id="listWithRoot" parameterType="com.yzsunlei.xmall.db.model.PmsProductCategoryExpand" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+     from pms_product_category where level=1 and show_status=1
+  </select>
+
+  <select id="getCategoryDetail" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from pms_product_category where level=1 and show_status=1 and id = #{id,jdbcType=BIGINT}
+  </select>
+
+</mapper>
